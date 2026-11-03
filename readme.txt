@@ -4,7 +4,7 @@ Contributors: fullspectrummarketing
 Requires at least: 5.9
 Tested up to: 6.4
 Requires PHP: 8.0
-Stable tag: 1.1.9
+Stable tag: 1.1.10
 License: GPLv2 or later
 
 Custom FAQ post type with page assignment and [fsm_display_faqs] shortcode. For use with FSM Foundation theme and ACF Pro.
@@ -77,6 +77,9 @@ Production installs receive updates from the FSM Cloudflare update broker (not G
 Cutover: keep the GitHub repo public until sites are on 1.1.0+, then make the repo private. Details in update-broker/CUTOVER.md.
 
 == Changelog ==
+
+= 1.1.10 =
+* Security: The `display_on_pages` fallback query now only returns published FAQs, and FAQ shortcode output is no longer written to the object cache during logged-in or admin-area renders, so private/draft FAQs cannot be cached and served to anonymous visitors.
 
 = 1.1.9 =
 * Fix: Re-apply live `data-allow-close` on Divi FAQ cache hits so a settings-only cache cannot keep the attribute at `0` after Foundation’s `fsm-divi-accordion-close` kit is enqueued (which previously hid the close icon and blocked kit close via capture-phase `stopImmediatePropagation`).

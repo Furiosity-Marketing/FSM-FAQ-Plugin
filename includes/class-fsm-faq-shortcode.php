@@ -117,6 +117,7 @@ function fsm_faq_get_faq_data( $post_id ) {
 			),
 			'orderby'                => 'menu_order',
 			'order'                  => 'ASC',
+			'post_status'            => 'publish',
 			'no_found_rows'          => true,
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
@@ -305,6 +306,19 @@ function fsm_faq_sync_divi_allow_close_attr( $html ) {
 }
 
 /**
+ * Whether this request's FAQ render may be stored in the shared object cache.
+ *
+ * Cache keys are per page, not per viewer, so never store renders from logged-in
+ * or admin-area requests.
+ *
+ * @return bool
+ * @since 1.1.10
+ */
+function fsm_faq_can_cache_render() {
+	return ! is_user_logged_in() && ! is_admin();
+}
+
+/**
  * Shortcode: [fsm_display_faqs]
  *
  * Description: Displays FAQ posts assigned to the page. Uses Divi markup when Divi is active; otherwise generic accordion. Includes FAQ schema.
@@ -341,7 +355,9 @@ function fsm_display_faqs_shortcode() {
 	$data = fsm_faq_get_faq_data( $current_post_id );
 
 	if ( empty( $data['items'] ) ) {
-		wp_cache_set( $cache_key, '', '', HOUR_IN_SECONDS );
+		if ( fsm_faq_can_cache_render() ) {
+			wp_cache_set( $cache_key, '', '', HOUR_IN_SECONDS );
+		}
 		return '';
 	}
 
@@ -353,7 +369,9 @@ function fsm_display_faqs_shortcode() {
 	$final_output .= $html;
 
 	// Cache the render-time HTML; live kit enqueue may still differ on later hits.
-	wp_cache_set( $cache_key, $final_output, '', HOUR_IN_SECONDS );
+	if ( fsm_faq_can_cache_render() ) {
+		wp_cache_set( $cache_key, $final_output, '', HOUR_IN_SECONDS );
+	}
 
 	return fsm_faq_sync_divi_allow_close_attr( $final_output );
 }
@@ -393,7 +411,9 @@ function fsm_display_generic_faqs_shortcode() {
 	$data = fsm_faq_get_faq_data( $current_post_id );
 
 	if ( empty( $data['items'] ) ) {
-		wp_cache_set( $cache_key, '', '', HOUR_IN_SECONDS );
+		if ( fsm_faq_can_cache_render() ) {
+			wp_cache_set( $cache_key, '', '', HOUR_IN_SECONDS );
+		}
 		return '';
 	}
 
@@ -402,7 +422,9 @@ function fsm_display_generic_faqs_shortcode() {
 	$final_output  = fsm_faq_get_inline_schema_script( $data['schema_questions'] );
 	$final_output .= $html;
 
-	wp_cache_set( $cache_key, $final_output, '', HOUR_IN_SECONDS );
+	if ( fsm_faq_can_cache_render() ) {
+		wp_cache_set( $cache_key, $final_output, '', HOUR_IN_SECONDS );
+	}
 
 	return $final_output;
 }
