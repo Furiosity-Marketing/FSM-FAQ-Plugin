@@ -79,6 +79,7 @@ Cutover: keep the GitHub repo public until sites are on 1.1.0+, then make the re
 == Changelog ==
 
 = 1.1.10 =
+* Security: The `display_on_pages` fallback query now only returns published FAQs, and FAQ shortcode output is no longer written to the object cache during logged-in or admin-area renders, so private/draft FAQs cannot be cached and served to anonymous visitors.
 * Updates: default broker metadata URL is now https://updates.furiositymarketing.com/fsm-faq.json. The old updates.fullspectrummarketing.com hostname keeps working for sites that have not updated yet.
 * Rebrand to Furiosity Marketing: plugin name, author and docs. Folder, slug, shortcodes and settings are unchanged, so existing installs keep working.
 

@@ -21,7 +21,7 @@
   "kv_namespaces": [
     {
       "binding": "STORE",
-      // FSM account namespace "fsm-faq-update-broker" (created via Cloudflare MCP)
+      // Furiosity Cloudflare account namespace "fsm-faq-update-broker" (created via Cloudflare MCP)
       "id": "b40e905330c047dd920002daa7c411f8"
     }
   ]
