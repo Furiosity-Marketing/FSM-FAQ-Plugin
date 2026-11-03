@@ -2,7 +2,7 @@
   "name": "fsm-faq-update-broker",
   "version": "1.0.0",
   "private": true,
-  "description": "Cloudflare Worker that serves FSM FAQ plugin update metadata and zips (PUC broker).",
+  "description": "Cloudflare Worker that serves Furiosity FAQ plugin update metadata and zips (PUC broker).",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",

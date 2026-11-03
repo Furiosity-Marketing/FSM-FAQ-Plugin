@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: plugin updates via Plugin Update Checker (PUC).
+ * Furiosity FAQ: plugin updates via Plugin Update Checker (PUC).
  *
  * Production (default): Cloudflare update broker JSON metadata URL.
  * Client sites do not need GitHub tokens.
@@ -43,10 +43,10 @@ if ( $fsm_faq_use_github ) {
 	$fsm_faq_update_checker->setBranch( apply_filters( 'fsm_faq_update_branch', 'main' ) );
 	$fsm_faq_update_checker->setAuthentication( FSM_FAQ_GITHUB_TOKEN );
 } else {
-	// Production: FSM Cloudflare broker (no GitHub credentials on the site).
+	// Production: Furiosity Cloudflare broker (no GitHub credentials on the site).
 	$fsm_faq_metadata = ( defined( 'FSM_FAQ_UPDATE_URL' ) && FSM_FAQ_UPDATE_URL )
 		? FSM_FAQ_UPDATE_URL
-		: 'https://updates.fullspectrummarketing.com/fsm-faq.json';
+		: 'https://updates.furiositymarketing.com/fsm-faq.json';
 
 	$fsm_faq_update_checker = PucFactory::buildUpdateChecker(
 		$fsm_faq_metadata,

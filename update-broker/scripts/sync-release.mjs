@@ -39,7 +39,7 @@ const version =
 	'';
 
 const zip = readFileSync(zipPath);
-const res = await fetch(`${brokerUrl}/admin/sync`, {
+const res = await fetch(`${brokerUrl}/admin/sync/fsm-faq`, {
 	method: 'POST',
 	headers: {
 		Authorization: `Bearer ${secret}`,

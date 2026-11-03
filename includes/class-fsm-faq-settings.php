@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: Settings page (brand colors, toggle icons, accordion behavior, schema mode)
+ * Furiosity FAQ: Settings page (brand colors, toggle icons, accordion behavior, schema mode)
  * and the front-end styling engine that turns saved options into scoped CSS.
  *
  * Settings are stored in a single option array (fsm_faq_settings) and applied to both

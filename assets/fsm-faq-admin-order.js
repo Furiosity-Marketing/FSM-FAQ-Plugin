@@ -1,5 +1,5 @@
 /**
- * FSM FAQ – Admin list-table drag-and-drop ordering.
+ * Furiosity FAQ – Admin list-table drag-and-drop ordering.
  *
  * Makes the All FAQs table rows sortable and persists menu_order via AJAX.
  * perPage comes from Screen Options (localized), not the visible row count,
