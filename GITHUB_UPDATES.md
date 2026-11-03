@@ -31,7 +31,7 @@ define( 'FSM_FAQ_UPDATE_URL', 'https://updates.fullspectrummarketing.com/fsm-faq
 Only for FSM-controlled environments that must hit GitHub directly:
 
 ```php
-define( 'FSM_FAQ_GITHUB_REPO', 'https://github.com/FSM-agency/FSM-FAQ-Plugin/' );
+define( 'FSM_FAQ_GITHUB_REPO', 'https://github.com/Furiosity-Marketing/FSM-FAQ-Plugin/' );
 define( 'FSM_FAQ_GITHUB_TOKEN', 'ghp_xxxxxxxxxxxx' ); // never commit
 ```
 
