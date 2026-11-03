@@ -11,6 +11,7 @@
 const META_KEY = 'fsm-faq:metadata';
 const ZIP_KEY = 'fsm-faq:zip';
 const VERSION_KEY = 'fsm-faq:version';
+const VERSION_RE = /^\d+\.\d+\.\d+([.-][0-9A-Za-z.-]+)?$/;
 
 export default {
 	async fetch(request, env, ctx) {
@@ -93,8 +94,8 @@ async function adminSync(request, env, requestUrl) {
 	}
 
 	const version = (request.headers.get('X-Plugin-Version') || '').replace(/^v/i, '').trim();
-	if (!version) {
-		return json({ error: 'Missing X-Plugin-Version header (e.g. 1.1.0)' }, 400);
+	if (!VERSION_RE.test(version)) {
+		return json({ error: 'Missing or invalid X-Plugin-Version header (e.g. 1.1.0)' }, 400);
 	}
 
 	const zip = await request.arrayBuffer();
@@ -129,7 +130,12 @@ async function adminSyncFromGitHub(request, env, requestUrl) {
 
 	const owner = env.GITHUB_OWNER || 'Furiosity-Marketing';
 	const repo = env.GITHUB_REPO || 'FSM-FAQ-Plugin';
-	const tag = (body.tag || request.headers.get('X-GitHub-Tag') || '').replace(/^v/i, '').trim();
+	const tag = String(body.tag || request.headers.get('X-GitHub-Tag') || '').replace(/^v/i, '').trim();
+	if (tag && !VERSION_RE.test(tag)) {
+		return json({ error: 'Invalid tag; expected a version such as 1.1.0 or v1.1.0' }, 400);
+	}
+
+	const repoApi = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
 
 	const headers = {
 		Accept: 'application/vnd.github+json',
@@ -142,12 +148,12 @@ async function adminSyncFromGitHub(request, env, requestUrl) {
 	let release;
 	if (tag) {
 		const res = await fetch(
-			`https://api.github.com/repos/${owner}/${repo}/releases/tags/v${tag}`,
+			`${repoApi}/releases/tags/${encodeURIComponent(`v${tag}`)}`,
 			{ headers }
 		);
 		if (!res.ok) {
 			const alt = await fetch(
-				`https://api.github.com/repos/${owner}/${repo}/releases/tags/${tag}`,
+				`${repoApi}/releases/tags/${encodeURIComponent(tag)}`,
 				{ headers }
 			);
 			if (!alt.ok) {
@@ -158,7 +164,7 @@ async function adminSyncFromGitHub(request, env, requestUrl) {
 			release = await res.json();
 		}
 	} else {
-		const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`, {
+		const res = await fetch(`${repoApi}/releases/latest`, {
 			headers,
 		});
 		if (!res.ok) {
@@ -167,17 +173,22 @@ async function adminSyncFromGitHub(request, env, requestUrl) {
 		release = await res.json();
 	}
 
-	const version = (release.tag_name || tag || '').replace(/^v/i, '');
-	if (!version) {
-		return json({ error: 'Could not determine release version' }, 502);
+	const releaseTag = typeof release.tag_name === 'string' ? release.tag_name : '';
+	const version = releaseTag.replace(/^v/i, '');
+	if (!VERSION_RE.test(version) || (tag && version !== tag)) {
+		return json({ error: 'GitHub release tag does not match the requested version' }, 502);
 	}
+
+	const assetPrefix = `${repoApi}/releases/assets/`;
 
 	// Prefer an uploaded release asset named like fsm-faq*.zip; else zipball.
 	let zipUrl = null;
 	if (Array.isArray(release.assets)) {
-		const asset = release.assets.find(
-			(a) => a.name && a.name.endsWith('.zip') && a.name.toLowerCase().includes('fsm-faq')
-		) || release.assets.find((a) => a.name && a.name.endsWith('.zip'));
+		const zips = release.assets.filter(
+			(a) => a && typeof a.name === 'string' && a.name.endsWith('.zip')
+				&& typeof a.url === 'string' && a.url.startsWith(assetPrefix)
+		);
+		const asset = zips.find((a) => a.name.toLowerCase().includes('fsm-faq')) || zips[0];
 		if (asset) {
 			zipUrl = asset.url; // API asset URL needs Accept: application/octet-stream
 		}
@@ -192,9 +203,8 @@ async function adminSyncFromGitHub(request, env, requestUrl) {
 		}
 		zip = await zres.arrayBuffer();
 	} else {
-		const ref = release.tag_name || `v${version}`;
 		const zres = await fetch(
-			`https://api.github.com/repos/${owner}/${repo}/zipball/${ref}`,
+			`${repoApi}/zipball/${encodeURIComponent(releaseTag)}`,
 			{ headers: { ...headers, Accept: 'application/vnd.github+json' }, redirect: 'follow' }
 		);
 		if (!zres.ok) {
