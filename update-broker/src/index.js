@@ -127,7 +127,7 @@ async function adminSyncFromGitHub(request, env, requestUrl) {
 		body = await request.json().catch(() => ({}));
 	}
 
-	const owner = env.GITHUB_OWNER || 'FSM-agency';
+	const owner = env.GITHUB_OWNER || 'Furiosity-Marketing';
 	const repo = env.GITHUB_REPO || 'FSM-FAQ-Plugin';
 	const tag = (body.tag || request.headers.get('X-GitHub-Tag') || '').replace(/^v/i, '').trim();
 

@@ -12,7 +12,7 @@
   ],
   "vars": {
     "PLUGIN_SLUG": "fsm-faq",
-    "GITHUB_OWNER": "FSM-agency",
+    "GITHUB_OWNER": "Furiosity-Marketing",
     "GITHUB_REPO": "FSM-FAQ-Plugin",
     "PUBLIC_BASE_URL": "https://updates.fullspectrummarketing.com"
   },

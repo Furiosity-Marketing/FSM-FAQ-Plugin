@@ -66,7 +66,7 @@ Laggards: one-time manual install of the 1.1.0 zip.
 ## 5. Privatize GitHub (only after soak)
 
 ```bash
-gh repo edit FSM-agency/FSM-FAQ-Plugin --visibility private
+gh repo edit Furiosity-Marketing/FSM-FAQ-Plugin --visibility private
 # Confirm prompts carefully.
 ```
 
