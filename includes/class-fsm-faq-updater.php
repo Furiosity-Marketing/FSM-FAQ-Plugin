@@ -46,7 +46,7 @@ if ( $fsm_faq_use_github ) {
 	// Production: FSM Cloudflare broker (no GitHub credentials on the site).
 	$fsm_faq_metadata = ( defined( 'FSM_FAQ_UPDATE_URL' ) && FSM_FAQ_UPDATE_URL )
 		? FSM_FAQ_UPDATE_URL
-		: 'https://updates.fullspectrummarketing.com/fsm-faq.json';
+		: 'https://updates.furiositymarketing.com/fsm-faq.json';
 
 	$fsm_faq_update_checker = PucFactory::buildUpdateChecker(
 		$fsm_faq_metadata,

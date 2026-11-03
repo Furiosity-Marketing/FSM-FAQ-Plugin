@@ -10,8 +10,8 @@ GitHub Release (private) → broker sync (CI or manual) → Cloudflare Worker
                                               Client WordPress (PUC)
 ```
 
-- Default metadata URL: `https://updates.fullspectrummarketing.com/fsm-faq.json`
-- Zip download: `https://updates.fullspectrummarketing.com/fsm-faq.zip`
+- Default metadata URL: `https://updates.furiositymarketing.com/fsm-faq.json`
+- Zip download: `https://updates.furiositymarketing.com/fsm-faq.zip`
 - Broker code and ops: [`update-broker/`](update-broker/)
 
 ## Client sites (production)
@@ -21,7 +21,7 @@ No `wp-config.php` defines required when using the default broker URL.
 Optional override of the metadata URL:
 
 ```php
-define( 'FSM_FAQ_UPDATE_URL', 'https://updates.fullspectrummarketing.com/fsm-faq.json' );
+define( 'FSM_FAQ_UPDATE_URL', 'https://updates.furiositymarketing.com/fsm-faq.json' );
 ```
 
 **Do not** put `FSM_FAQ_GITHUB_TOKEN` on client sites.
@@ -56,7 +56,7 @@ See [`update-broker/CUTOVER.md`](update-broker/CUTOVER.md) for the privatize che
 
 ```bash
 cd update-broker
-BROKER_URL=https://updates.fullspectrummarketing.com \
+BROKER_URL=https://updates.furiositymarketing.com \
 SYNC_SECRET=… \
 node scripts/sync-release.mjs 1.1.1
 ```

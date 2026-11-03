@@ -6,15 +6,17 @@
   "workers_dev": true,
   "routes": [
     {
+      "pattern": "updates.furiositymarketing.com",
+      "custom_domain": true
+    },
+    {
+      // Legacy hostname: FSM FAQ <= 1.1.9 has it hard-coded. Keep until all sites run 1.1.10+.
       "pattern": "updates.fullspectrummarketing.com",
       "custom_domain": true
     }
   ],
   "vars": {
-    "PLUGIN_SLUG": "fsm-faq",
-    "GITHUB_OWNER": "Furiosity-Marketing",
-    "GITHUB_REPO": "FSM-FAQ-Plugin",
-    "PUBLIC_BASE_URL": "https://updates.fullspectrummarketing.com"
+    "PUBLIC_BASE_URL": "https://updates.furiositymarketing.com"
   },
   "kv_namespaces": [
     {

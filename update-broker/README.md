@@ -1,18 +1,31 @@
-# FSM FAQ Update Broker (Cloudflare Worker)
+# Furiosity Update Broker (Cloudflare Worker)
 
-Serves Plugin Update Checker metadata and the plugin zip so client sites never need a GitHub token.
+Serves Plugin Update Checker metadata and plugin zips so client sites never need a GitHub token. One Worker serves every plugin listed in [`src/plugins.js`](src/plugins.js).
+
+| Slug | Repo | Sync secret (Worker) |
+|------|------|----------------------|
+| `fsm-faq` | Furiosity-Marketing/FSM-FAQ-Plugin | `SYNC_SECRET` |
+| `click-id-utm-capture` | Furiosity-Marketing/click-id-utm-capture | `SYNC_SECRET_CLICK_ID_UTM_CAPTURE` |
 
 ## Endpoints
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| GET | `/fsm-faq.json` | PUC metadata |
-| GET | `/fsm-faq.zip` | Plugin zip download |
-| POST | `/admin/sync` | Upload a packaged zip (`Authorization: Bearer SYNC_SECRET`, header `X-Plugin-Version`) |
-| POST | `/admin/sync-from-github` | Pull latest/tag release from GitHub (needs `GITHUB_TOKEN` when private) |
-| GET | `/health` | Liveness |
+| GET | `/<slug>.json` | PUC metadata |
+| GET | `/<slug>.zip` | Plugin zip download |
+| POST | `/admin/sync/<slug>` | Upload a packaged zip (`Authorization: Bearer <slug's sync secret>`, header `X-Plugin-Version`; optional `X-Plugin-Requires`, `X-Plugin-Tested`, `X-Plugin-Requires-PHP`) |
+| POST | `/admin/sync-from-github/<slug>` | Pull latest/tag release from GitHub (needs `GITHUB_TOKEN` when private) |
+| GET | `/health` | Liveness + served slugs |
 
-Production URL (after DNS): `https://updates.fullspectrummarketing.com/fsm-faq.json`
+`/admin/sync` and `/admin/sync-from-github` without a slug still mean `fsm-faq` (legacy CI).
+
+Production URL: `https://updates.furiositymarketing.com/<slug>.json`. The legacy hostname `updates.fullspectrummarketing.com` is still attached because FSM FAQ <= 1.1.9 has it hard-coded; remove that route once every FAQ install is on 1.1.10+.
+
+## Adding a plugin
+
+1. Add an entry to `src/plugins.js` (slug = plugin folder name, `secret` = a new Worker secret name).
+2. Deploy, then `npx wrangler secret put <SECRET_NAME>`.
+3. In the plugin repo, point PUC at `https://updates.furiositymarketing.com/<slug>.json` and add a CI step that POSTs the zip to `/admin/sync/<slug>`.
 
 ## Deploy (FSM Cloudflare account)
 
@@ -32,13 +45,13 @@ npx wrangler secret put SYNC_SECRET
 npx wrangler secret put GITHUB_TOKEN
 ```
 
-Scope `GITHUB_TOKEN` to read-only Contents access on `FSM-FAQ-Plugin` only (fine-grained PAT or GitHub App). Sync tags must be versions like `1.1.0` / `v1.1.0`; anything else is rejected.
+Scope `GITHUB_TOKEN` to read-only Contents access on the plugin repos only (fine-grained PAT or GitHub App). Sync tags must be versions like `1.1.0` / `v1.1.0`; anything else is rejected.
 
-Map custom domain `updates.fullspectrummarketing.com` to this Worker in the Cloudflare dashboard.
+Custom domains are declared in `wrangler.jsonc` `routes`.
 
 Set GitHub Actions secrets on this repo:
 
-- `FSM_FAQ_BROKER_URL` — e.g. `https://updates.fullspectrummarketing.com`
+- `FSM_FAQ_BROKER_URL` — e.g. `https://updates.furiositymarketing.com`
 - `FSM_FAQ_BROKER_SYNC_SECRET` — same value as Worker `SYNC_SECRET`
 
 Full cutover (bridge release → soak → privatize): see [CUTOVER.md](CUTOVER.md).
@@ -47,7 +60,7 @@ Full cutover (bridge release → soak → privatize): see [CUTOVER.md](CUTOVER.m
 
 ```bash
 chmod +x scripts/package-plugin.sh
-BROKER_URL=https://updates.fullspectrummarketing.com \
+BROKER_URL=https://updates.furiositymarketing.com \
 SYNC_SECRET=… \
 node scripts/sync-release.mjs 1.1.0
 ```

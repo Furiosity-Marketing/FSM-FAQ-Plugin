@@ -23,17 +23,17 @@ npx wrangler secret put SYNC_SECRET
 npx wrangler secret put GITHUB_TOKEN
 ```
 
-Attach custom domain `updates.fullspectrummarketing.com` to the Worker (Workers → Custom Domains), or set `routes` in `wrangler.jsonc`.
+Attach custom domain `updates.furiositymarketing.com` to the Worker (Workers → Custom Domains), or set `routes` in `wrangler.jsonc`.
 
 Repo secrets for Actions:
 
-- `FSM_FAQ_BROKER_URL` = `https://updates.fullspectrummarketing.com`
+- `FSM_FAQ_BROKER_URL` = `https://updates.furiositymarketing.com`
 - `FSM_FAQ_BROKER_SYNC_SECRET` = same as Worker `SYNC_SECRET`
 
 ## 2. Seed metadata (before or with bridge release)
 
 ```bash
-BROKER_URL=https://updates.fullspectrummarketing.com \
+BROKER_URL=https://updates.furiositymarketing.com \
 SYNC_SECRET=… \
 node scripts/sync-release.mjs 1.1.0
 ```
@@ -41,8 +41,8 @@ node scripts/sync-release.mjs 1.1.0
 Verify:
 
 ```bash
-curl -fsS https://updates.fullspectrummarketing.com/fsm-faq.json
-curl -fsS -o /tmp/fsm-faq.zip https://updates.fullspectrummarketing.com/fsm-faq.zip
+curl -fsS https://updates.furiositymarketing.com/fsm-faq.json
+curl -fsS -o /tmp/fsm-faq.zip https://updates.furiositymarketing.com/fsm-faq.zip
 unzip -l /tmp/fsm-faq.zip | head
 ```
 

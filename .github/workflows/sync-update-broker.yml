@@ -64,7 +64,7 @@ jobs:
             exit 1
           fi
           ZIP="update-broker/dist/fsm-faq-${VERSION}.zip"
-          curl -fsS -X POST "${BROKER_URL%/}/admin/sync" \
+          curl -fsS -X POST "${BROKER_URL%/}/admin/sync/fsm-faq" \
             -H "Authorization: Bearer ${SYNC_SECRET}" \
             -H "X-Plugin-Version: ${VERSION}" \
             -H "Content-Type: application/zip" \
