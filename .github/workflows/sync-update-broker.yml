@@ -23,36 +23,49 @@ jobs:
 
       - name: Resolve version
         id: ver
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ inputs.tag }}
         run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            TAG="${{ github.event.release.tag_name }}"
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "release" ]; then
+            TAG="$RELEASE_TAG"
           else
-            TAG="${{ inputs.tag }}"
+            TAG="$INPUT_TAG"
           fi
           TAG="${TAG#v}"
           if [ -z "$TAG" ]; then
             TAG="$(grep -E '^\s*\* Version:' fsm-faq.php | head -1 | sed -E 's/.*Version:\s*//')"
           fi
+          VERSION_RE='^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'
+          if [[ ! "$TAG" =~ $VERSION_RE ]]; then
+            echo "::error::Invalid release version; expected e.g. 1.2.3 or v1.2.3"
+            exit 1
+          fi
           echo "version=$TAG" >> "$GITHUB_OUTPUT"
 
       - name: Package plugin zip
+        env:
+          VERSION: ${{ steps.ver.outputs.version }}
         run: |
           chmod +x update-broker/scripts/package-plugin.sh
-          update-broker/scripts/package-plugin.sh update-broker/dist "${{ steps.ver.outputs.version }}"
+          update-broker/scripts/package-plugin.sh update-broker/dist "$VERSION"
 
       - name: Upload zip to broker
         env:
           BROKER_URL: ${{ secrets.FSM_FAQ_BROKER_URL }}
           SYNC_SECRET: ${{ secrets.FSM_FAQ_BROKER_SYNC_SECRET }}
+          VERSION: ${{ steps.ver.outputs.version }}
         run: |
           set -euo pipefail
           if [ -z "${BROKER_URL:-}" ] || [ -z "${SYNC_SECRET:-}" ]; then
             echo "Missing FSM_FAQ_BROKER_URL or FSM_FAQ_BROKER_SYNC_SECRET repository secrets."
             exit 1
           fi
-          ZIP="update-broker/dist/fsm-faq-${{ steps.ver.outputs.version }}.zip"
+          ZIP="update-broker/dist/fsm-faq-${VERSION}.zip"
           curl -fsS -X POST "${BROKER_URL%/}/admin/sync" \
             -H "Authorization: Bearer ${SYNC_SECRET}" \
-            -H "X-Plugin-Version: ${{ steps.ver.outputs.version }}" \
+            -H "X-Plugin-Version: ${VERSION}" \
             -H "Content-Type: application/zip" \
             --data-binary @"$ZIP"

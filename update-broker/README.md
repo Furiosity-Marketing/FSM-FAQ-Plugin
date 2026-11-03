@@ -32,6 +32,8 @@ npx wrangler secret put SYNC_SECRET
 npx wrangler secret put GITHUB_TOKEN
 ```
 
+Scope `GITHUB_TOKEN` to read-only Contents access on `FSM-FAQ-Plugin` only (fine-grained PAT or GitHub App). Sync tags must be versions like `1.1.0` / `v1.1.0`; anything else is rejected.
+
 Map custom domain `updates.fullspectrummarketing.com` to this Worker in the Cloudflare dashboard.
 
 Set GitHub Actions secrets on this repo:
