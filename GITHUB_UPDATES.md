@@ -1,6 +1,6 @@
-# GitHub-based / broker updates for FSM FAQ
+# GitHub-based / broker updates for Furiosity FAQ
 
-This plugin uses [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) (PUC). **Production installs talk to the FSM Cloudflare update broker**, not GitHub. That keeps the GitHub repo private while sites still get one-click updates.
+This plugin uses [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) (PUC). **Production installs talk to the Furiosity Cloudflare update broker**, not GitHub. That keeps the GitHub repo private while sites still get one-click updates.
 
 ## Architecture
 
@@ -28,7 +28,7 @@ define( 'FSM_FAQ_UPDATE_URL', 'https://updates.furiositymarketing.com/fsm-faq.js
 
 ## Agency / internal GitHub override
 
-Only for FSM-controlled environments that must hit GitHub directly:
+Only for Furiosity-controlled environments that must hit GitHub directly:
 
 ```php
 define( 'FSM_FAQ_GITHUB_REPO', 'https://github.com/Furiosity-Marketing/FSM-FAQ-Plugin/' );
@@ -39,7 +39,7 @@ Both must be set; then PUC uses GitHub instead of the broker.
 
 ## Zero-break cutover (do not privatize first)
 
-1. **Broker live** — Deploy `update-broker` on the FSM Cloudflare account; sync at least one release; verify JSON + zip. Repo stays **public**.
+1. **Broker live** — Deploy `update-broker` on the Furiosity Cloudflare account; sync at least one release; verify JSON + zip. Repo stays **public**.
 2. **Bridge release** — Ship plugin **1.1.0+** (this version points PUC at the broker) as a normal **public** GitHub Release so existing sites auto-update via the old GitHub flow.
 3. **Soak** — Confirm key installs show 1.1.0+ and “Check for updates” succeeds against the broker.
 4. **Privatize** — Set the GitHub repo to private. Sites on 1.1.0+ are unaffected.

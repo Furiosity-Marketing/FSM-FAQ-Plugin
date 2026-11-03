@@ -1,13 +1,13 @@
-=== FSM FAQ ===
+=== Furiosity FAQ ===
 
-Contributors: fullspectrummarketing
+Contributors: furiositymarketing
 Requires at least: 5.9
 Tested up to: 6.4
 Requires PHP: 8.0
 Stable tag: 1.1.10
 License: GPLv2 or later
 
-Custom FAQ post type with page assignment and [fsm_display_faqs] shortcode. For use with FSM Foundation theme and ACF Pro.
+Custom FAQ post type with page assignment and [fsm_display_faqs] shortcode. For use with the Foundation theme and ACF Pro.
 
 == Description ==
 
@@ -53,13 +53,13 @@ Output only one FAQ schema per page. If a page also uses an SEO plugin's own FAQ
 == Installation ==
 
 1. Install and activate Advanced Custom Fields Pro.
-2. Upload the plugin folder to wp-content/plugins/ and activate "FSM FAQ". Field groups are registered automatically.
+2. Upload the plugin folder to wp-content/plugins/ and activate "Furiosity FAQ". Field groups are registered automatically.
 
 == Migration from theme-based FAQ ==
 
 To move existing sites from the old fragmented implementation (FAQ code in theme + native ACF groups) to this plugin:
 
-1. Deploy the FSM FAQ plugin and activate it (ACF Pro must be active).
+1. Deploy the Furiosity FAQ plugin and activate it (ACF Pro must be active).
 2. Remove FAQ code from the theme: delete faq-post-type.php, remove the FAQ block from core.php (fsm_has_faqs_for_page, fsm_update_faq_status_on_save, admin columns), and remove the [fsm_display_faqs] shortcode from shortcodes.php. Or deploy the updated Foundation theme that already has that code removed.
 3. On first load, the plugin runs a one-time migration: it removes any existing "FAQs" and "Page FAQs" field groups from the ACF database (by key) so the plugin's local field groups are the single source of truth. FAQ post content and post meta (faq_answer, display_on_pages) are not touched; only the field group definitions move from DB to plugin code.
 4. Clear any object cache (Redis/Memcached) or wait for TTL so [fsm_display_faqs] output is fresh.
@@ -67,7 +67,7 @@ To move existing sites from the old fragmented implementation (FAQ code in theme
 
 == Updates (Cloudflare broker) ==
 
-Production installs receive updates from the FSM Cloudflare update broker (not GitHub). No wp-config tokens are required for clients.
+Production installs receive updates from the Furiosity Cloudflare update broker (not GitHub). No wp-config tokens are required for clients.
 
 1. Default metadata URL: https://updates.furiositymarketing.com/fsm-faq.json
 2. Optional override: define( 'FSM_FAQ_UPDATE_URL', 'https://updates.furiositymarketing.com/fsm-faq.json' );
@@ -80,6 +80,7 @@ Cutover: keep the GitHub repo public until sites are on 1.1.0+, then make the re
 
 = 1.1.10 =
 * Updates: default broker metadata URL is now https://updates.furiositymarketing.com/fsm-faq.json. The old updates.fullspectrummarketing.com hostname keeps working for sites that have not updated yet.
+* Rebrand to Furiosity Marketing: plugin name, author and docs. Folder, slug, shortcodes and settings are unchanged, so existing installs keep working.
 
 = 1.1.9 =
 * Fix: Re-apply live `data-allow-close` on Divi FAQ cache hits so a settings-only cache cannot keep the attribute at `0` after Foundation’s `fsm-divi-accordion-close` kit is enqueued (which previously hid the close icon and blocked kit close via capture-phase `stopImmediatePropagation`).
@@ -110,7 +111,7 @@ Cutover: keep the GitHub repo public until sites are on 1.1.0+, then make the re
 * New: Native drag-and-drop ordering on the All FAQs screen (`menu_order`); ACF Page FAQs relationship order takes precedence per page when set.
 * New: FAQ schema output modes — inline JSON-LD (default), merge into Yoast / Rank Math / All in One SEO, or off.
 * Security: Harden FAQ capabilities and content escaping.
-* Updates: Production installs use the FSM Cloudflare update broker (no per-site GitHub tokens). Agency GitHub override retained when both `FSM_FAQ_GITHUB_REPO` and `FSM_FAQ_GITHUB_TOKEN` are set.
+* Updates: Production installs use the Furiosity Cloudflare update broker (no per-site GitHub tokens). Agency GitHub override retained when both `FSM_FAQ_GITHUB_REPO` and `FSM_FAQ_GITHUB_TOKEN` are set.
 
 = 1.1.3 =
 * Fix: Divi close-on-click matches Foundation’s WCAG kit script and skips loading when that kit is already present.
@@ -122,7 +123,7 @@ Cutover: keep the GitHub repo public until sites are on 1.1.0+, then make the re
 * Harden release packaging: explicit allowlist so root secret files cannot ship in the public update zip.
 
 = 1.1.0 =
-* Bridge release: default updates via FSM Cloudflare broker (no per-site GitHub tokens).
+* Bridge release: default updates via Furiosity Cloudflare broker (no per-site GitHub tokens).
 * Agency GitHub override retained when both FSM_FAQ_GITHUB_REPO and FSM_FAQ_GITHUB_TOKEN are set.
 
 = 1.0.5 =

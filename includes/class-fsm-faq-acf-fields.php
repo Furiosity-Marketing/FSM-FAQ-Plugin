@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: Register ACF field groups (FAQ post type + Page FAQs relationship).
+ * Furiosity FAQ: Register ACF field groups (FAQ post type + Page FAQs relationship).
  *
  * Provides display_on_pages and faq_answer on FAQ, and optional page_faqs on parent post types
  * (default: Page; extend via fsm_faq_parent_post_types filter)

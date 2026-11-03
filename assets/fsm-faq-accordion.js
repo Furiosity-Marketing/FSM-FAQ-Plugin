@@ -1,5 +1,5 @@
 /**
- * FSM FAQ – Generic accordion toggle (theme-agnostic fallback).
+ * Furiosity FAQ – Generic accordion toggle (theme-agnostic fallback).
  * Uses W3Schools-style pattern: button + panel, toggle .active and maxHeight.
  *
  * Only one panel is open at a time. Behavior is controlled per-container via data

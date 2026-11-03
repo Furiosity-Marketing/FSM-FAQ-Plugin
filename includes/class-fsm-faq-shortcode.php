@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: [fsm_display_faqs] and [fsm_display_generic_faqs] shortcodes.
+ * Furiosity FAQ: [fsm_display_faqs] and [fsm_display_generic_faqs] shortcodes.
  *
  * - [fsm_display_faqs]: Uses Divi markup when Divi is active; otherwise generic accordion.
  * - [fsm_display_generic_faqs]: Always uses generic accordion (theme-agnostic).

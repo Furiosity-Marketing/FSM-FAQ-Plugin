@@ -8,8 +8,8 @@
  */
 export const PLUGINS = {
 	'fsm-faq': {
-		name: 'FSM FAQ',
-		homepage: 'https://fsm.agency',
+		name: 'Furiosity FAQ',
+		homepage: 'https://furiositymarketing.com/',
 		requires: '5.9',
 		tested: '6.4',
 		requires_php: '8.0',
@@ -29,5 +29,5 @@ export const PLUGINS = {
 	},
 };
 
-// /admin/sync without a slug predates multi-plugin support and means FSM FAQ.
+// /admin/sync without a slug predates multi-plugin support and means Furiosity FAQ.
 export const DEFAULT_SLUG = 'fsm-faq';

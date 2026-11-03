@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: FSM FAQ
+ * Plugin Name: Furiosity FAQ
  * Description: Custom FAQ post type with ACF fields, page assignment, and [fsm_display_faqs] shortcode. Requires Advanced Custom Fields Pro.
  * Version: 1.1.10
- * Author: Full Spectrum Marketing
- * Author URI: https://fsm.agency
+ * Author: Furiosity Marketing
+ * Author URI: https://furiositymarketing.com/
  * Text Domain: fsm-faq
  * Requires at least: 5.9
  * Requires PHP: 8.0
@@ -18,7 +18,7 @@ define( 'FSM_FAQ_VERSION', '1.1.10' );
 define( 'FSM_FAQ_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
- * Updates via FSM Cloudflare broker (Plugin Update Checker).
+ * Updates via Furiosity Cloudflare broker (Plugin Update Checker).
  * PUC must be present in vendor/plugin-update-checker/ or plugin-update-checker-5.6/.
  * Override with FSM_FAQ_UPDATE_URL, or agency GitHub override (see GITHUB_UPDATES.md).
  */
@@ -54,7 +54,7 @@ function fsm_faq_acf_required_notice() {
 		return;
 	}
 	echo '<div class="notice notice-warning"><p>';
-	echo esc_html__( 'FSM FAQ requires Advanced Custom Fields Pro. Install and activate ACF Pro to use FAQ fields and the shortcode.', 'fsm-faq' );
+	echo esc_html__( 'Furiosity FAQ requires Advanced Custom Fields Pro. Install and activate ACF Pro to use FAQ fields and the shortcode.', 'fsm-faq' );
 	echo '</p></div>';
 }
 

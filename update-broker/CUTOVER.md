@@ -2,7 +2,7 @@
 
 Follow in order. **Do not make the GitHub repo private until step 4.**
 
-## 1. Deploy broker (FSM Cloudflare account)
+## 1. Deploy broker (Furiosity Cloudflare account)
 
 Prerequisites:
 

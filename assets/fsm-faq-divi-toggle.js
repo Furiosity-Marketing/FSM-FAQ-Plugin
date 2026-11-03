@@ -1,5 +1,5 @@
 /**
- * FSM FAQ – Allow open Divi toggles to be closed (settings-aware).
+ * Furiosity FAQ – Allow open Divi toggles to be closed (settings-aware).
  *
  * Divi's accordion always keeps one item open. Closing the currently open item is not
  * native Divi behavior; Foundation 5.0 adds it in the child-theme WCAG kit

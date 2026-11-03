@@ -1,5 +1,5 @@
 /**
- * FSM FAQ – Settings screen: initialize WordPress color pickers.
+ * Furiosity FAQ – Settings screen: initialize WordPress color pickers.
  *
  * @since 1.1.0
  */

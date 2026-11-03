@@ -19,7 +19,7 @@ Serves Plugin Update Checker metadata and plugin zips so client sites never need
 
 `/admin/sync` and `/admin/sync-from-github` without a slug still mean `fsm-faq` (legacy CI).
 
-Production URL: `https://updates.furiositymarketing.com/<slug>.json`. The legacy hostname `updates.fullspectrummarketing.com` is still attached because FSM FAQ <= 1.1.9 has it hard-coded; remove that route once every FAQ install is on 1.1.10+.
+Production URL: `https://updates.furiositymarketing.com/<slug>.json`. The legacy hostname `updates.fullspectrummarketing.com` is still attached because Furiosity FAQ <= 1.1.9 has it hard-coded; remove that route once every FAQ install is on 1.1.10+.
 
 ## Adding a plugin
 
@@ -27,9 +27,9 @@ Production URL: `https://updates.furiositymarketing.com/<slug>.json`. The legacy
 2. Deploy, then `npx wrangler secret put <SECRET_NAME>`.
 3. In the plugin repo, point PUC at `https://updates.furiositymarketing.com/<slug>.json` and add a CI step that POSTs the zip to `/admin/sync/<slug>`.
 
-## Deploy (FSM Cloudflare account)
+## Deploy (Furiosity Cloudflare account)
 
-KV namespace **fsm-faq-update-broker** is already created on the FSM account:
+KV namespace **fsm-faq-update-broker** is already created on the Furiosity Cloudflare account:
 
 - id: `b40e905330c047dd920002daa7c411f8` (wired in `wrangler.jsonc`)
 
@@ -73,4 +73,4 @@ npx wrangler kv namespace create STORE --temporary
 npx wrangler deploy --temporary --var SYNC_SECRET:local-dev-secret
 ```
 
-Claim within 60 minutes if you want to keep that preview account. Prefer deploying to the real FSM account with `CLOUDFLARE_API_TOKEN` instead.
+Claim within 60 minutes if you want to keep that preview account. Prefer deploying to the real Furiosity account with `CLOUDFLARE_API_TOKEN` instead.

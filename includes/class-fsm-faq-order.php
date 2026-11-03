@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: Native drag-and-drop ordering for the FAQ list table.
+ * Furiosity FAQ: Native drag-and-drop ordering for the FAQ list table.
  *
  * Sets menu_order on the FAQ post type by dragging rows on the All FAQs screen
  * (no Order meta box). This provides the global display order used by the shortcode;

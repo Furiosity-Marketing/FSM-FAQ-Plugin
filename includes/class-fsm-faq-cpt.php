@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: Register FAQ post type.
+ * Furiosity FAQ: Register FAQ post type.
  *
  * Uses dedicated faq/faqs capabilities (not post) so the Author role cannot
  * publish FAQs or assign them onto pages. Editors and Administrators keep full

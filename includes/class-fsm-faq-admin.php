@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: Admin columns, save_post handler (_has_faqs + cache invalidation), and helper.
+ * Furiosity FAQ: Admin columns, save_post handler (_has_faqs + cache invalidation), and helper.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

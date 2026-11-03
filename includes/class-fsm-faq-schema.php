@@ -1,6 +1,6 @@
 <?php
 /**
- * FSM FAQ: FAQPage JSON-LD schema output.
+ * Furiosity FAQ: FAQPage JSON-LD schema output.
  *
  * Three modes (see Settings -> Structured Data):
  * - shortcode  : inline <script type="application/ld+json"> after the FAQ markup (default).
